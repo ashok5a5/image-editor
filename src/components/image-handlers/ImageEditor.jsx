@@ -1,13 +1,19 @@
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
-import { Button, DialogActions, DialogTitle, Typography } from "@mui/material";
+import {
+  Button,
+  ButtonGroup,
+  DialogActions,
+  DialogTitle,
+  TextField,
+  Typography,
+} from "@mui/material";
 import AvatarEditor from "react-avatar-editor";
 import { useEffect, useRef, useState } from "react";
 import * as constants from "../../utils/constants";
-import SyncIcon from '@mui/icons-material/Sync';
-import RotateLeftIcon from '@mui/icons-material/RotateLeft';
-import ZoomInIcon from '@mui/icons-material/ZoomIn';
-import ZoomOutIcon from '@mui/icons-material/ZoomOut';
+import SyncIcon from "@mui/icons-material/Sync";
+import ZoomInIcon from "@mui/icons-material/ZoomIn";
+import ZoomOutIcon from "@mui/icons-material/ZoomOut";
 
 const ImageEditor = ({ open, handleClose, imageToEdit }) => {
   const editor = useRef(null);
@@ -38,11 +44,19 @@ const ImageEditor = ({ open, handleClose, imageToEdit }) => {
     resetAll();
   }, [open]);
 
-  const rotateLeft = () => {
-    if (rotation === 270) {
+  const rotate = (e) => {
+    e.target?.value && !isNaN(e.target.value) ? setRotation(parseInt(e.target.value)%360) : setRotation(0);
+  };
+
+  const rotateUp = () => {
+    setRotation((rotation + 10)%360);
+  };
+
+  const rotateDown = () => {
+    if ((rotation - 10)%360 <= 0) {
       setRotation(0);
     } else {
-      setRotation(rotation - 90);
+      setRotation((rotation - 10)%360);
     }
   };
 
@@ -72,8 +86,18 @@ const ImageEditor = ({ open, handleClose, imageToEdit }) => {
   return (
     <>
       <Dialog maxWidth="xl" open={open} close={() => handleClose(false)}>
-        <DialogTitle>
-          <Typography variant="h4">Image Editor</Typography>
+        <DialogTitle className="dialog-title">
+          <Typography variant="h6">Image Editor</Typography>
+          <div className="inputRotate">
+            <Typography variant="h6" style={{ marginRight: 10 }}>
+              Rotate:{" "}
+            </Typography>
+            <ButtonGroup size="xs" aria-label="small outlined button group">
+              <Button onClick={rotateUp}>+</Button>
+              <TextField value={rotation} onChange={rotate}/>
+              <Button onClick={rotateDown}>-</Button>
+            </ButtonGroup>
+          </div>
         </DialogTitle>
         <DialogContent>
           <div className="canvas-editor">
@@ -94,9 +118,9 @@ const ImageEditor = ({ open, handleClose, imageToEdit }) => {
               <div className="icon" title="Zoom Out" onClick={zoomOut}>
                 <ZoomOutIcon />
               </div>
-              <div className="icon" title="Rotate Left" onClick={rotateLeft}>
+              {/* <div className="icon" title="Rotate Left" onClick={rotateLeft}>
                 <RotateLeftIcon />
-              </div>
+              </div> */}
               <div className="icon" title="Reset" onClick={resetAll}>
                 <SyncIcon />
               </div>

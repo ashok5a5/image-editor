@@ -93,3 +93,26 @@ input[type=file]{
   color: white;
   font-size: 25px;
  }
+
+ .dialog-title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+ }
+.inputRotate{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.inputRotate .MuiInputBase-input {
+  height: auto !important;
+  padding: 7px 0 !important;
+  width: 50px !important;
+  text-align: center;
+}
+
+.inputRotate .MuiInputLabel-root {
+  top: -10px !important;
+}

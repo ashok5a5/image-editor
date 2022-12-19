@@ -3,7 +3,7 @@ const ImageRenderer = (props) => {
     <>
       {!!props.imageSrc && (
         <div className="renderedImage imageContainer" >
-          <img src={props.imageSrc} alt="Upload images only" />
+          <img data-testid="imageTag" src={props.imageSrc} alt="Upload images only" />
         </div>
       )}
     </>
